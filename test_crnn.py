@@ -8,7 +8,7 @@ from utlis.net_cfg_parser import parser_cfg_file
 class Test_CRNN(object):
     def __init__(self, batch_size=None):
         net_params, train_params = parser_cfg_file('./net.cfg')
-        self._model_save_path = str(net_params['model_save_path'])
+        self._model_save_path = 'model/'#str(net_params['model_save_path'])
         self.input_img_height = int(net_params['input_height'])
         self.input_img_width = int(net_params['input_width'])
         if batch_size is None:
@@ -33,7 +33,7 @@ class Test_CRNN(object):
 
         self.sess = tf.Session()
         saver = tf.train.Saver()
-        saver.restore(self.sess, "/home/tony/ocr/model/93/ckpt")
+        saver.restore(self.sess, "model/ckpt")
 
     def _get_input_img(self, img_path_list):
 
@@ -75,6 +75,9 @@ class Test_CRNN(object):
                 print(img_path_list[i], ':', predict_seq[i])
                 cv2.imshow(img_path_list[i], img_list[i])
             cv2.waitKey()
+            
+        print(img_path_list)
+        print(predict_seq)
 
         return predict_seq
 
@@ -115,7 +118,7 @@ class Test_CRNN(object):
 
 if __name__ == "__main__":
 
-    test_img_list = ['/home/tony/ocr/test_data/00023.jpg']
+    test_img_list = ['cut_png7.jpg', 'cut_png7-2.jpg', 'WX20210421-121341@2x.png']
     a = Test_CRNN()
     a.test_img(test_img_list)
 
